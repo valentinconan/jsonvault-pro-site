@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSONVault Pro — JSON, YAML & XML Viewer for Chrome</title>
+  <link rel="icon" type="image/png" sizes="128x128" href="../img/icon-128.png" />
+  <link rel="shortcut icon" href="../img/icon-128.png" />
+  <meta name="description" content="A powerful Chrome extension to visualize, analyze and compare JSON, YAML and XML directly in your browser." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #6366f1;
+      --accent-pro: #a855f7;
+      --bg: #0f0f13;
+      --bg-card: #1a1a24;
+      --bg-card2: #22223a;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --border: #2e2e42;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Layout ── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+    .nav-logo .logo-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+    .nav-links { display: flex; gap: 24px; font-size: 0.9rem; color: var(--muted); align-items: center; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    .lang-switch {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .lang-switch:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 0 64px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(163, 85, 247, 0.15);
+      border: 1px solid rgba(163, 85, 247, 0.35);
+      color: #c084fc;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #e8e8f0 30%, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; text-decoration: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-pro));
+      color: #fff;
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Carousel ── */
+    .carousel-section {
+      padding: 56px 0;
+      overflow: hidden;
+    }
+    .carousel {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .carousel-viewport {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.12), 0 24px 64px rgba(0, 0, 0, 0.55);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .carousel-slide {
+      min-width: 100%;
+      position: relative;
+    }
+    .carousel-slide img {
+      width: 100%;
+      display: block;
+    }
+    .carousel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 16px;
+      background: linear-gradient(transparent, rgba(10, 10, 16, 0.85));
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: left;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(26, 26, 36, 0.85);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 2;
+      transition: background 0.15s;
+    }
+    .carousel-btn:hover { background: var(--bg-card2); }
+    .carousel-btn.prev { left: 0; }
+    .carousel-btn.next { right: 0; }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dot.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    /* ── Privacy strip ── */
+    .privacy-strip {
+      border-top: 1px solid rgba(74, 222, 128, 0.15);
+      border-bottom: 1px solid rgba(74, 222, 128, 0.15);
+      background: rgba(74, 222, 128, 0.04);
+      padding: 28px 0;
+    }
+    .privacy-strip .container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .privacy-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4ade80;
+      white-space: nowrap;
+      padding-right: 20px;
+      border-right: 1px solid rgba(74, 222, 128, 0.25);
+      margin-right: 8px;
+    }
+    .privacy-items {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .privacy-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .privacy-item svg { color: #4ade80; flex-shrink: 0; }
+
+    /* ── Features ── */
+    section { padding: 64px 0; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Pro section ── */
+    .pro-section {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(163, 85, 247, 0.05) 0%, transparent 100%);
+    }
+    .pro-section .section-label { color: var(--accent-pro); }
+    .pro-section .section-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent-pro));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-pro {
+      background: var(--bg-card2);
+      border-color: rgba(163, 85, 247, 0.3);
+    }
+    .card-pro h3::before {
+      content: '✦ ';
+      color: var(--accent-pro);
+      font-size: 0.7rem;
+    }
+
+    /* ── Support ── */
+    .support-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .support-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .support-card h3 { font-size: 1rem; font-weight: 600; }
+    .support-card p { font-size: 0.85rem; color: var(--muted); flex: 1; }
+    .support-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+    }
+    footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer .footer-left { font-size: 0.85rem; color: var(--muted); }
+    footer .footer-links { display: flex; gap: 20px; font-size: 0.85rem; }
+    footer .footer-links a { color: var(--muted); }
+    footer .footer-links a:hover { color: var(--text); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <div class="nav-logo">
+        <img class="logo-icon" src="../img/icon-128.png" alt="JSONVault Pro icon" />
+        JSONVault Pro
+      </div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#pro">Pro</a>
+        <a href="#support">Support</a>
+        <a href="privacy-policy.html">Privacy</a>
+        <a href="/fr/" class="lang-switch">FR</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">Chrome Extension · MV3</div>
+      <h1>Visualize JSON, YAML &amp; XML<br/>directly in your browser</h1>
+      <p>Stop squinting at raw responses. JSONVault Pro turns any JSON, YAML or XML page into a clean, interactive, searchable tree — instantly.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">
+          ⬇ Add to Chrome — it's free
+        </a>
+        <a href="#features" class="btn btn-ghost">See features</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy strip -->
+  <div class="privacy-strip">
+    <div class="container">
+      <span class="privacy-label">Privacy first</span>
+      <div class="privacy-items">
+        <span class="privacy-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Zero tracking or analytics
+        </span>
+        <span class="privacy-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+          No external calls
+        </span>
+        <span class="privacy-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Your data never leaves your machine
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshots carousel -->
+  <div class="carousel-section">
+    <div class="carousel">
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 1.png" alt="Tree view in dark theme with smart value badges" />
+            <div class="carousel-caption">Tree view — Dark theme · Smart value badges (JWT, Base64, IP, TS)</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 1 bis.png" alt="Tree view in light theme" />
+            <div class="carousel-caption">Tree view — Light theme</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 2.png" alt="Preview mode with structured table view" />
+            <div class="carousel-caption">Preview mode — Structured table view for array data</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 3 devtool.png" alt="DevTools panel capturing network responses" />
+            <div class="carousel-caption">DevTools panel — Capture &amp; inspect network responses in real-time</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 4 diff.png" alt="Side-by-side diff tool" />
+            <div class="carousel-caption">Diff tool — Side-by-side comparison with line-level highlighting</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 5 smart values.png" alt="JWT decoded inline with smart values" />
+            <div class="carousel-caption">Smart values — JWT decoded inline with header, payload &amp; expiry</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="../img/JSONVault pro - screen 6 settings.png" alt="Settings panel" />
+            <div class="carousel-caption">Settings — Customize themes, display options and extension preferences</div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-btn prev" id="carouselPrev" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carousel-btn next" id="carouselNext" aria-label="Next">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+  </div>
+
+  <!-- Free features -->
+  <section id="features">
+    <div class="container">
+      <div class="section-label">Free tier</div>
+      <div class="section-title">Everything you need, out of the box</div>
+      <p class="section-sub">Works automatically on any JSON, YAML or XML URL — no configuration needed.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-icon">🌲</div>
+          <h3>Interactive tree view</h3>
+          <p>Collapsible nodes, expand/collapse all, highlight on hover. Navigate large payloads effortlessly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>Search &amp; highlight</h3>
+          <p>Instant full-text search across keys and values with match count and keyboard navigation.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h3>Copy path &amp; value</h3>
+          <p>Right-click any node to copy its JSONPath, value, or the full subtree as formatted JSON.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎨</div>
+          <h3>Syntax highlighting</h3>
+          <p>Color-coded types (strings, numbers, booleans, null) for instant readability.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Multi-format support</h3>
+          <p>Automatic detection and rendering of JSON, YAML and XML with format-specific parsing.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">↔️</div>
+          <h3>Built-in diff tool</h3>
+          <p>Side-by-side comparison of two JSON/YAML/XML documents with line-level change highlighting.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛠️</div>
+          <h3>DevTools panel</h3>
+          <p>Capture and inspect network responses in real-time from the browser DevTools.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <h3>Standalone viewer</h3>
+          <p>Paste, import or drag-and-drop any file to visualize it — no URL needed.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h3>Hash &amp; size info</h3>
+          <p>SHA-256 hash and byte size of the current document, always visible in the toolbar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pro features -->
+  <section id="pro" class="pro-section">
+    <div class="container">
+      <div class="section-label">Pro tier</div>
+      <div class="section-title">Unlock <span>superpowers</span></div>
+      <p class="section-sub">For developers who live in APIs. One-time or subscription — works across all your Chrome profiles.</p>
+      <div class="grid-3">
+        <div class="card card-pro">
+          <div class="card-icon">🔐</div>
+          <h3>JWT auto-decode</h3>
+          <p>Detects and decodes JWT tokens inline — header, payload and expiry at a glance.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">🔡</div>
+          <h3>Base64 auto-detect</h3>
+          <p>Automatically decodes Base64 strings and previews the content inline.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">✅</div>
+          <h3>JSON Schema validation</h3>
+          <p>Validate any document against a JSON Schema and see errors highlighted in context.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">🔎</div>
+          <h3>JSONPath queries</h3>
+          <p>Run JSONPath expressions to filter and extract exactly what you need.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">📤</div>
+          <h3>Export to YAML, XML, CSV, TypeScript</h3>
+          <p>Convert any JSON document to multiple formats with one click.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">🕓</div>
+          <h3>History</h3>
+          <p>Browse and restore the last 50 documents you've opened — across sessions.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">⚡</div>
+          <h3>Virtual tree for large files</h3>
+          <p>Render files over 10MB smoothly with a virtualized tree view.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">🎨</div>
+          <h3>21 premium themes</h3>
+          <p>Dracula, Tokyo Night, Solarized, Nord, Gruvbox and more — with auto dark/light matching.</p>
+        </div>
+        <div class="card card-pro">
+          <div class="card-icon">✏️</div>
+          <h3>Live editing &amp; minify</h3>
+          <p>Edit documents directly in the viewer with live preview and one-click minification.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Support -->
+  <section id="support">
+    <div class="container">
+      <div class="section-label">Support</div>
+      <div class="section-title">We're here to help</div>
+      <div class="support-grid">
+        <div class="support-card">
+          <h3>🐛 Report a bug</h3>
+          <p>Found something broken? Open an issue on GitHub — we review every report.</p>
+          <a href="https://github.com/valentinconan/jsonvault-pro-site/issues/new?template=bug_report.md" target="_blank">
+            Open a bug report →
+          </a>
+        </div>
+        <div class="support-card">
+          <h3>💡 Request a feature</h3>
+          <p>Have an idea to make JSONVault Pro better? We'd love to hear it.</p>
+          <a href="https://github.com/valentinconan/jsonvault-pro-site/issues/new?template=feature_request.md" target="_blank">
+            Suggest a feature →
+          </a>
+        </div>
+        <div class="support-card">
+          <h3>📬 Contact</h3>
+          <p>For billing, licensing or private inquiries, reach out directly by email.</p>
+          <a href="mailto:support@jsonvaultpro.com">
+            support@jsonvaultpro.com →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-left">© 2026 JSONVault Pro. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="https://github.com/valentinconan/jsonvault-pro-site/issues" target="_blank">GitHub Issues</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const track = document.getElementById('carouselTrack');
+      const dotsContainer = document.getElementById('carouselDots');
+      const slides = track.querySelectorAll('.carousel-slide');
+      const total = slides.length;
+      let current = 0;
+
+      // Build dots
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+      });
+
+      function goTo(index) {
+        current = (index + total) % total;
+        track.style.transform = 'translateX(-' + current * 100 + '%)';
+        dotsContainer.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      document.getElementById('carouselPrev').addEventListener('click', () => goTo(current - 1));
+      document.getElementById('carouselNext').addEventListener('click', () => goTo(current + 1));
+
+      // Swipe support
+      let startX = 0;
+      track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', e => {
+        const delta = startX - e.changedTouches[0].clientX;
+        if (Math.abs(delta) > 40) goTo(current + (delta > 0 ? 1 : -1));
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Politique de confidentialité — JSONVault Pro</title>
+  <link rel="icon" type="image/png" sizes="128x128" href="../img/icon-128.png" />
+  <link rel="shortcut icon" href="../img/icon-128.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #6366f1;
+      --bg: #0f0f13;
+      --bg-card: #1a1a24;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --border: #2e2e42;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); }
+
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo .logo-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    .lang-switch {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .lang-switch:hover { color: var(--text); }
+
+    .container { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+    .content { padding: 56px 0 80px; }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .last-updated {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 36px 0 12px;
+      color: var(--text);
+    }
+    p {
+      font-size: 0.95rem;
+      color: #c0c0d0;
+      margin-bottom: 12px;
+    }
+    ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    ul li {
+      font-size: 0.95rem;
+      color: #c0c0d0;
+      margin-bottom: 6px;
+    }
+    .highlight {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 0.95rem;
+    }
+    .highlight strong { color: var(--text); }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="/fr/" class="nav-logo">
+        <img class="logo-icon" src="../img/icon-128.png" alt="Icône JSONVault Pro" />
+        JSONVault Pro
+      </a>
+      <a href="/en/privacy-policy.html" class="lang-switch">EN</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="container">
+      <h1>Politique de confidentialité</h1>
+      <p class="last-updated">Dernière mise à jour : 27 février 2026</p>
+
+      <div class="highlight">
+        <strong>En résumé :</strong> JSONVault Pro traite les données localement sur votre appareil. Nous ne collectons pas, ne transmettons pas et ne vendons pas vos données personnelles ni le contenu des documents que vous consultez.
+      </div>
+
+      <h2>1. Qui sommes-nous</h2>
+      <p>JSONVault Pro est une extension Chrome développée et maintenue en tant que projet indépendant. Pour toute question relative à la vie privée, contactez-nous à <a href="mailto:support@jsonvaultpro.com">support@jsonvaultpro.com</a>.</p>
+
+      <h2>2. Données que nous ne collectons PAS</h2>
+      <p>JSONVault Pro ne collecte pas, ne stocke pas sur des serveurs externes et ne transmet pas :</p>
+      <ul>
+        <li>Le contenu des documents JSON, YAML ou XML que vous consultez</li>
+        <li>Les URL que vous visitez</li>
+        <li>Toute information personnellement identifiable</li>
+        <li>L'historique de navigation ou les données d'analyse comportementale</li>
+      </ul>
+
+      <h2>3. Données stockées localement sur votre appareil</h2>
+      <p>JSONVault Pro stocke les données suivantes exclusivement dans le stockage local de votre navigateur (<code>chrome.storage.local</code>), qui ne quitte jamais votre appareil :</p>
+      <ul>
+        <li><strong>Préférences utilisateur :</strong> thème, mode d'affichage, taille de police, fonctionnalités activées et autres paramètres d'affichage.</li>
+        <li><strong>Historique des documents (Pro) :</strong> les 50 derniers documents consultés, conservés pour votre commodité. Vous pouvez effacer cet historique à tout moment depuis la page Historique.</li>
+        <li><strong>Statut de licence :</strong> si votre compte dispose d'un abonnement Pro actif (mis en cache localement pour éviter des appels réseau répétés).</li>
+      </ul>
+
+      <h2>4. Vérification de licence (niveau Pro)</h2>
+      <p>Si vous achetez une licence Pro, l'extension communique avec <a href="https://extensionpay.com" target="_blank">ExtensionPay</a> uniquement pour vérifier votre statut de licence. Cela implique :</p>
+      <ul>
+        <li>L'envoi de votre jeton d'identité Chrome aux serveurs d'ExtensionPay pour vérifier le statut de l'abonnement.</li>
+        <li>Aucun contenu de document ni donnée de navigation n'est inclus dans cette requête.</li>
+      </ul>
+      <p>La politique de confidentialité d'ExtensionPay s'applique à cette interaction : <a href="https://extensionpay.com/privacy" target="_blank">extensionpay.com/privacy</a>.</p>
+
+      <h2>5. Permissions utilisées</h2>
+      <p>L'extension demande les permissions Chrome suivantes, chacune avec un objectif spécifique et limité :</p>
+      <ul>
+        <li><strong>activeTab / scripting :</strong> pour injecter l'interface de visualisation dans l'onglet courant lorsqu'une URL JSON/YAML/XML est détectée.</li>
+        <li><strong>storage :</strong> pour sauvegarder vos préférences et votre historique localement.</li>
+        <li><strong>alarms :</strong> pour planifier le nettoyage périodique des données expirées (TTL de l'historique).</li>
+        <li><strong>devtools :</strong> pour fournir le panneau DevTools permettant d'inspecter les réponses réseau.</li>
+      </ul>
+
+      <h2>6. Services tiers</h2>
+      <p>JSONVault Pro n'intègre aucun réseau publicitaire, plateforme d'analyse ni courtier en données. Le seul service tiers impliqué est ExtensionPay, utilisé exclusivement pour la gestion des licences Pro (voir section 4).</p>
+
+      <h2>7. Modifications de cette politique</h2>
+      <p>Nous pouvons mettre à jour cette politique de confidentialité au fil de l'évolution de l'extension. Les modifications seront reflétées par la mise à jour de la date « Dernière mise à jour » en haut de cette page. Les changements importants seront communiqués via la bannière « Nouveautés » de l'extension.</p>
+
+      <h2>8. Contact</h2>
+      <p>Pour toute question concernant cette politique de confidentialité, contactez-nous à <a href="mailto:support@jsonvaultpro.com">support@jsonvaultpro.com</a> ou ouvrez un ticket sur <a href="https://github.com/valentinconan/jsonvault-pro-site/issues" target="_blank">GitHub</a>.</p>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <span>© 2026 JSONVault Pro</span>
+      <a href="/fr/">← Retour à l'accueil</a>
+    </div>
+  </footer>
+
+</body>
+</html>
