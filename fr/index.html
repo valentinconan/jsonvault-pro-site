@@ -359,9 +359,99 @@
     footer .footer-links { display: flex; gap: 20px; font-size: 0.85rem; }
     footer .footer-links a { color: var(--muted); }
     footer .footer-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      backdrop-filter: blur(4px);
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .carousel-slide img { cursor: zoom-in; }
+
+    /* ── Mobile nav ── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 4px;
+      line-height: 0;
+    }
+
+    @media (max-width: 620px) {
+      .nav-hamburger { display: flex; align-items: center; }
+
+      nav { position: relative; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        gap: 0;
+        padding: 8px 0;
+        z-index: 100;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        padding: 12px 24px;
+        width: 100%;
+        font-size: 0.95rem;
+      }
+      .lang-switch {
+        margin: 4px 24px 8px;
+        width: fit-content;
+      }
+
+      .hero { padding: 48px 0 36px; }
+      .hero p { font-size: 1rem; }
+      .hero-actions { flex-direction: column; align-items: center; }
+
+      .privacy-strip .container { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .privacy-label { border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid rgba(74,222,128,0.25); padding-bottom: 10px; width: 100%; }
+      .privacy-items { gap: 16px; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Zoom image">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Fermer">&#x2715;</button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
 
   <!-- Nav -->
   <nav>
@@ -370,7 +460,14 @@
         <img class="logo-icon" src="../img/icon-128.png" alt="Icône JSONVault Pro" />
         JSONVault Pro
       </div>
-      <div class="nav-links">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <div class="nav-links" id="navLinks">
         <a href="#features">Fonctionnalités</a>
         <a href="#pro">Pro</a>
         <a href="#support">Support</a>
@@ -614,6 +711,52 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Lightbox
+    (function () {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightboxImg');
+
+      document.querySelectorAll('.carousel-slide img').forEach(function (img) {
+        img.addEventListener('click', function () {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightbox.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLightbox();
+      });
+    })();
+
+    // Menu hamburger
+    (function () {
+      const btn = document.getElementById('navHamburger');
+      const links = document.getElementById('navLinks');
+      btn.addEventListener('click', function () {
+        const open = links.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open);
+      });
+      links.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          links.classList.remove('open');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+    })();
+  </script>
 
   <script>
     (function () {
