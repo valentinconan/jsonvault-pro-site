@@ -294,29 +294,6 @@
       line-height: 1.5;
     }
 
-    /* ── Pro section ── */
-    .pro-section {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(163, 85, 247, 0.05) 0%, transparent 100%);
-    }
-    .pro-section .section-label { color: var(--accent-pro); }
-    .pro-section .section-title span {
-      background: linear-gradient(135deg, var(--accent), var(--accent-pro));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .card-pro {
-      background: var(--bg-card2);
-      border-color: rgba(163, 85, 247, 0.3);
-    }
-    .card-pro h3::before {
-      content: '✦ ';
-      color: var(--accent-pro);
-      font-size: 0.7rem;
-    }
-
     /* ── Support ── */
     .support-grid {
       display: grid;
@@ -469,7 +446,6 @@
       </button>
       <div class="nav-links" id="navLinks">
         <a href="#features">Features</a>
-        <a href="#pro">Pro</a>
         <a href="#support">Support</a>
         <a href="privacy-policy.html">Privacy</a>
         <a href="/fr/" class="lang-switch">FR</a>
@@ -480,9 +456,9 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <div class="hero-badge">Chrome Extension · MV3</div>
+      <div class="hero-badge">🎉 100% Free — every feature, forever</div>
       <h1>Visualize JSON, YAML &amp; XML<br/>directly in your browser</h1>
-      <p>Stop squinting at raw responses. JSONVault Pro turns any JSON, YAML or XML page into a clean, interactive, searchable tree — instantly.</p>
+      <p>Stop squinting at raw responses. JSONVault Pro turns any JSON, YAML or XML page into a clean, interactive, searchable tree — instantly. No config, no signup, no paywall.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/jsonvault-pro/ipghignebclihkckdpcagnicpopjaokj" target="_blank" rel="noopener" class="btn btn-primary">
           ⬇ Add to Chrome — it's free
@@ -558,12 +534,12 @@
     </div>
   </div>
 
-  <!-- Free features -->
+  <!-- Features -->
   <section id="features">
     <div class="container">
-      <div class="section-label">Free tier</div>
-      <div class="section-title">Everything you need, out of the box</div>
-      <p class="section-sub">Works automatically on any JSON, YAML or XML URL — no configuration needed.</p>
+      <div class="section-label">Features</div>
+      <div class="section-title">Everything, unlocked</div>
+      <p class="section-sub">Works automatically on any JSON, YAML or XML URL — no configuration, no premium tier, no paywall.</p>
       <div class="grid-3">
         <div class="card">
           <div class="card-icon">🌲</div>
@@ -610,58 +586,47 @@
           <h3>Hash &amp; size info</h3>
           <p>SHA-256 hash and byte size of the current document, always visible in the toolbar.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pro features -->
-  <section id="pro" class="pro-section">
-    <div class="container">
-      <div class="section-label">Pro tier</div>
-      <div class="section-title">Unlock <span>superpowers</span></div>
-      <p class="section-sub">For developers who live in APIs. One-time or subscription — works across all your Chrome profiles.</p>
-      <div class="grid-3">
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🔐</div>
           <h3>JWT auto-decode</h3>
           <p>Detects and decodes JWT tokens inline — header, payload and expiry at a glance.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🔡</div>
           <h3>Base64 auto-detect</h3>
           <p>Automatically decodes Base64 strings and previews the content inline.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">✅</div>
           <h3>JSON Schema validation</h3>
           <p>Validate any document against a JSON Schema and see errors highlighted in context.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🔎</div>
           <h3>JSONPath queries</h3>
           <p>Run JSONPath expressions to filter and extract exactly what you need.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">📤</div>
           <h3>Export to YAML, XML, CSV, TypeScript</h3>
           <p>Convert any JSON document to multiple formats with one click.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🕓</div>
           <h3>History</h3>
           <p>Browse and restore the last 50 documents you've opened — across sessions.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">⚡</div>
           <h3>Virtual tree for large files</h3>
           <p>Render files over 10MB smoothly with a virtualized tree view.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🎨</div>
           <h3>21 premium themes</h3>
           <p>Dracula, Tokyo Night, Solarized, Nord, Gruvbox and more — with auto dark/light matching.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">✏️</div>
           <h3>Live editing &amp; minify</h3>
           <p>Edit documents directly in the viewer with live preview and one-click minification.</p>
@@ -692,7 +657,7 @@
         </div>
         <div class="support-card">
           <h3>📬 Contact</h3>
-          <p>For billing, licensing or private inquiries, reach out directly by email.</p>
+          <p>For any private inquiries, reach out directly by email.</p>
           <a href="mailto:support@jsonvaultpro.com">
             support@jsonvaultpro.com →
           </a>

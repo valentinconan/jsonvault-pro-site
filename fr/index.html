@@ -294,29 +294,6 @@
       line-height: 1.5;
     }
 
-    /* ── Pro section ── */
-    .pro-section {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(163, 85, 247, 0.05) 0%, transparent 100%);
-    }
-    .pro-section .section-label { color: var(--accent-pro); }
-    .pro-section .section-title span {
-      background: linear-gradient(135deg, var(--accent), var(--accent-pro));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .card-pro {
-      background: var(--bg-card2);
-      border-color: rgba(163, 85, 247, 0.3);
-    }
-    .card-pro h3::before {
-      content: '✦ ';
-      color: var(--accent-pro);
-      font-size: 0.7rem;
-    }
-
     /* ── Support ── */
     .support-grid {
       display: grid;
@@ -469,7 +446,6 @@
       </button>
       <div class="nav-links" id="navLinks">
         <a href="#features">Fonctionnalités</a>
-        <a href="#pro">Pro</a>
         <a href="#support">Support</a>
         <a href="privacy-policy.html">Confidentialité</a>
         <a href="/en/" class="lang-switch">EN</a>
@@ -480,9 +456,9 @@
   <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <div class="hero-badge">Extension Chrome · MV3</div>
+      <div class="hero-badge">🎉 100 % gratuit — toutes les fonctionnalités, pour toujours</div>
       <h1>Visualisez JSON, YAML &amp; XML<br/>directement dans votre navigateur</h1>
-      <p>Fini de plisser les yeux sur des réponses brutes. JSONVault Pro transforme n'importe quelle page JSON, YAML ou XML en un arbre interactif, lisible et consultable — instantanément.</p>
+      <p>Fini de plisser les yeux sur des réponses brutes. JSONVault Pro transforme n'importe quelle page JSON, YAML ou XML en un arbre interactif, lisible et consultable — instantanément. Sans configuration, sans inscription, sans paywall.</p>
       <div class="hero-actions">
         <a href="https://chromewebstore.google.com/detail/jsonvault-pro/ipghignebclihkckdpcagnicpopjaokj?hl=fr" target="_blank" rel="noopener" class="btn btn-primary">
           ⬇ Ajouter à Chrome — c'est gratuit
@@ -561,9 +537,9 @@
   <!-- Free features -->
   <section id="features">
     <div class="container">
-      <div class="section-label">Gratuit</div>
-      <div class="section-title">Tout ce dont vous avez besoin, d'emblée</div>
-      <p class="section-sub">Fonctionne automatiquement sur toutes les URL JSON, YAML ou XML — aucune configuration requise.</p>
+      <div class="section-label">Fonctionnalités</div>
+      <div class="section-title">Tout, débloqué</div>
+      <p class="section-sub">Fonctionne automatiquement sur toutes les URL JSON, YAML ou XML — aucune configuration, aucun niveau payant, aucun paywall.</p>
       <div class="grid-3">
         <div class="card">
           <div class="card-icon">🌲</div>
@@ -610,58 +586,47 @@
           <h3>Hash &amp; taille</h3>
           <p>Hash SHA-256 et taille en octets du document courant, toujours visibles dans la barre d'outils.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pro features -->
-  <section id="pro" class="pro-section">
-    <div class="container">
-      <div class="section-label">Pro</div>
-      <div class="section-title">Débloquez des <span>super-pouvoirs</span></div>
-      <p class="section-sub">Pour les développeurs qui vivent dans les APIs. Achat unique ou abonnement — fonctionne sur tous vos profils Chrome.</p>
-      <div class="grid-3">
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🔐</div>
           <h3>Décodage JWT automatique</h3>
           <p>Détecte et décode les tokens JWT en ligne — en-tête, payload et expiration en un coup d'œil.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🔡</div>
           <h3>Détection Base64 automatique</h3>
           <p>Décode automatiquement les chaînes Base64 et prévisualise le contenu en ligne.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">✅</div>
           <h3>Validation JSON Schema</h3>
           <p>Validez n'importe quel document selon un JSON Schema et voyez les erreurs surlignées en contexte.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🔎</div>
           <h3>Requêtes JSONPath</h3>
           <p>Exécutez des expressions JSONPath pour filtrer et extraire exactement ce dont vous avez besoin.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">📤</div>
           <h3>Export vers YAML, XML, CSV, TypeScript</h3>
           <p>Convertissez n'importe quel document JSON en plusieurs formats en un clic.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🕓</div>
           <h3>Historique</h3>
           <p>Parcourez et restaurez les 50 derniers documents ouverts — entre les sessions.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">⚡</div>
           <h3>Arbre virtuel pour les grands fichiers</h3>
           <p>Affichez fluidement des fichiers de plus de 10 Mo grâce à un arbre virtualisé.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">🎨</div>
           <h3>21 thèmes premium</h3>
           <p>Dracula, Tokyo Night, Solarized, Nord, Gruvbox et plus — avec correspondance automatique sombre/clair.</p>
         </div>
-        <div class="card card-pro">
+        <div class="card">
           <div class="card-icon">✏️</div>
           <h3>Édition en direct &amp; minification</h3>
           <p>Modifiez les documents directement dans le visionneur avec aperçu en direct et minification en un clic.</p>
@@ -692,7 +657,7 @@
         </div>
         <div class="support-card">
           <h3>📬 Contact</h3>
-          <p>Pour la facturation, les licences ou les demandes privées, contactez-nous directement par e-mail.</p>
+          <p>Pour toute demande privée, contactez-nous directement par e-mail.</p>
           <a href="mailto:support@jsonvaultpro.com">
             support@jsonvaultpro.com →
           </a>
